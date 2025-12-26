@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="content">
+<!--      <div class="container-fluid">-->
+<!--        <div class="row">-->
+<!--          &lt;!&ndash; left column &ndash;&gt;-->
+<!--          <div class="col-md-6 my-5 mx-5">-->
+<!--            <div class="card card-primary">-->
+<!--              <div class="card-header">-->
+<!--                <h3 class="card-title">Quick Example</h3>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; /.card-header &ndash;&gt;-->
+<!--              &lt;!&ndash; form start &ndash;&gt;-->
+<!--              <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}-->
+<!--                <div class="card-body">-->
+<!--                  <div class="form-group">-->
+<!--                    <label>nom</label>-->
+<!--                    <input type="text" name="nom" class="form-control" placeholder="Enter email">-->
+<!--                  </div>-->
+<!--                   <div class="form-group">-->
+<!--                    <label >prenom</label>-->
+<!--                    <input type="text" name="prenom" class="form-control" placeholder="Enter email">-->
+<!--                  </div>-->
+<!--                   <div class="form-group">-->
+<!--                    <label >numero</label>-->
+<!--                    <input type="number" name="numero" class="form-control" placeholder="Enter email">-->
+<!--                  </div>-->
+<!--                   <div class="form-group">-->
+<!--                    <label >email</label>-->
+<!--                    <input type="email" name="email" class="form-control" placeholder="Enter email">-->
+<!--                  </div>-->
+
+<!--                  <div class="form-group">-->
+<!--                    <label >diplome</label>-->
+<!--                    <input type="text" name="diplome" class="form-control" placeholder="Enter email">-->
+<!--                  </div>-->
+
+<!--                  <div class="form-group">-->
+<!--                    <label >experience</label>-->
+<!--                    <input type="text" name="experience" class="form-control" placeholder="Enter email">-->
+<!--                  </div>-->
+
+
+<!--                  <div class="form-group">-->
+<!--                    <label >genre</label>-->
+<!--                    <input type="text" name="genre" class="form-control" placeholder="Enter email">-->
+<!--                  </div>-->
+
+<!--                  <div class="form-group">-->
+<!--                    <label >quartier</label>-->
+<!--                    <input type="text" name="quartier" class="form-control" placeholder="Password">-->
+<!--                  </div>-->
+
+<!--                  <div class="form-group">-->
+<!--                    <label >attestion</label>-->
+<!--                    <div class="input-group">-->
+<!--                      <div class="custom-file">-->
+<!--                        <input type="file" name="attestion" class="custom-file-input" >-->
+<!--                        <label class="custom-file-label" >Choose file</label>-->
+<!--                      </div>-->
+
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  <div class="form-group">-->
+<!--                    <label >cv</label>-->
+<!--                    <div class="input-group">-->
+<!--                      <div class="custom-file">-->
+<!--                        <input type="file" name="cv" class="custom-file-input" >-->
+<!--                        <label class="custom-file-label" >Choose file</label>-->
+<!--                      </div>-->
+
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  <div class="form-group">-->
+<!--                    <label >lettre_motivation</label>-->
+<!--                    <div class="input-group">-->
+<!--                      <div class="custom-file">-->
+<!--                        <input type="file" name="lettre_motivation" class="custom-file-input" >-->
+<!--                        <label class="custom-file-label" >Choose file</label>-->
+<!--                      </div>-->
+
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--                &lt;!&ndash; /.card-body &ndash;&gt;-->
+
+<!--                <div class="card-footer">-->
+<!--                  <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--                </div>-->
+<!--              </form>-->
+<!--            </div>-->
+
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<div class="container mt-4">
+  <h2>Toutes les offres</h2>
+  {% if offres %}
+    <div class="list-group mt-3">
+      {% for offre in offres %}
+        <a href="{% url 'offre_detail' offre.uuid %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ offre.libelle }}</strong><br>
+            <small class="text-muted">{{ offre.categorie.libelle }}</small>
+          </div>
+          <span class="badge bg-primary rounded-pill">Voir</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Aucune offre disponible pour le moment.</p>
+  {% endif %}
+</div>
+
+</section>
+{% endblock %}

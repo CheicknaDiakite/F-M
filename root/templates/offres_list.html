@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Offres pour : {{ sous.libelle }}</h2>
+  {% if offres %}
+    <ul class="list-group mt-3">
+      {% for offre in offres %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ offre.libelle }}
+          <a class="btn btn-primary btn-sm" href="{% url 'offre_detail' offre.uuid %}">Voir / Postuler</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Aucune offre pour cette sous-catégorie.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

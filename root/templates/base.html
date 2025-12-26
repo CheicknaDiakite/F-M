@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recrutement CAFE SARL</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <!-- Theme style -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FW2RPVP5G9"></script>
+
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+</head>
+<body >
+<div class="wrapper boxed-wrapper">
+  <header class="">
+    <div class="container-fluid p-0">
+      <!-- logo for regular state and mobile devices -->
+      <img src="{% static 'dist/img/img.png' %}" alt="logo" style="width:100%; height:50px; object-fit:cover; display:block;">
+    </div>
+  </header>
+  <!-- Main Nav -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">F A M A</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {# Boucle sur les catégories et affiche chaque catégorie comme un dropdown #}
+          {% for categorie in categories %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="cat-{{ categorie.uuid }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ categorie.libelle }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="cat-{{ categorie.uuid }}">
+              {% for sous in categorie.sous_categorie %}
+                <li><a class="dropdown-item" href="{% url 'souscategorie_offres' sous.uuid %}">{{ sous.libelle }}</a></li>
+              {% empty %}
+                <li><span class="dropdown-item disabled">Aucune sous-catégorie</span></li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    {% block content %} {% endblock  %}
+  </main>
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+</div>
+
+    <!-- jQuery -->
+    <script src="{%static 'plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- bs-custom-file-input -->
+    <script src="{% static 'plugins/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+
+        {% for msg in messages %}
+
+            swal("","{{msg}}","{{msg.tags}}");
+
+        {% endfor %}
+
+    </script>
+
+    <script>
+        $(function () {
+          bsCustomFileInput.init();
+        });
+    </script>
+
+    <script>
+        var quill = new Quill('#quill_editor', {
+                theme: 'snow'
+        });
+       quill.on('text-change', function(delta, oldDelta, source) {
+            document.getElementById("quill_html").value = quill.root.innerHTML;
+        });
+    </script>
+
+</body>
+</html>

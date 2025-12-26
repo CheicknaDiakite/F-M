@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+
+
+    <!-- Right navbar links -->
+
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+<!--    <a href="../../index3.html" class="brand-link">-->
+<!--      <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">-->
+<!--      <span class="brand-text font-weight-light">AdminLTE 3</span>-->
+<!--    </a>-->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+  <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+
+          <li class="nav-header">Menu</li>
+          <li class="nav-item">
+
+            <a href="{% url 'administration' %}" class="nav-link">
+              <i class="nav-icon fa fa-history"></i>
+              <p>
+                En attente
+                <span class="badge badge-info right">{{nombre_candidat_entente}}</span>
+              </p>
+            </a>
+
+            <a href="{% url 'administration' 'preselectionner' %}" class="nav-link">
+              <i class="nav-icon fa fa-check"></i>
+              <p>
+                Présélectionnés
+                <span class="badge badge-info right">{{nombre_preselectionner}}</span>
+              </p>
+            </a>
+
+            <a href="{% url 'administration' 'rejeter' %}" class="nav-link">
+              <i class="nav-icon fa fa-times-circle"></i>
+              <p>
+                Rejeter
+                <span class="badge badge-info right">{{nombre_rejeter}}</span>
+              </p>
+            </a>
+
+          </li>
+
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+
+    <div class="sidebar-custom">
+      <a href="#" class="btn btn-link"><i class="fas fa-cogs"></i></a>
+      <a href="{% url 'deconnection' %}" class="btn btn-secondary hide-on-collapse pos-right">Déconnexion</a>
+    </div>
+    <!-- /.sidebar-custom -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+
+
+    <!-- Main content -->
+    <section class="content">
+
+
+
+      <div class="container-fluid">
+
+           <h2 class="text-center display-4">Liste des candidats ({{nombre_candidat}})</h2>
+            <form action="" method="post"> {% csrf_token %}
+                <div class="row">
+
+                    <div class="col-md-3 form-group">
+                        <label for="diplome">Diplome ({{diplome}})</label>
+                        <select name="diplome" id="diplome" class="form-control" >
+                            <option value="tous">Tous</option>
+                            <option value="BAC + 3">BAC + 3</option>
+                            <option value="BAC + 4">BAC + 4</option>
+                            <option value="BAC + 5">BAC + 5 ou plus</option>
+
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                        <label for="experience">Expérience ({{experience}})</label>
+                        <select name="experience" id="experience" class="form-control" >
+                            <option value="tous">Tous</option>
+                            <option value="3 ans">3 ans</option>
+                            <option value="4 ans">4 ans</option>
+                            <option value="5 ans">5 ans ou plus</option>
+
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                        <label for="genre">Genre ({{genre}})</label>
+                        <select name="genre" id="genre" class="form-control" >
+                            <option value="tous">Tous</option>
+                            <option value="Femme">Femme</option>
+                            <option value="Homme">Homme</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label for="diplome">Filtre</label>
+                        <input  type="submit" name="filter"  class="bg-primary text-white form-control" value="Filtrer">
+                    </div>
+
+
+                </div>
+            </form>
+
+        <div class="row">
+          <div class="col-12">
+
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Liste des candidat</h3>
+              </div>
+              <!-- /.card-header -->
+                <form action="" method="post" > {% csrf_token %}
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                      <th>select</th>
+                    <th>Prénom / nom</th>
+                    <th>Diplômes</th>
+                    <th>Expérience</th>
+                    <th>Genre</th>
+                    <th style="width:20px">Contacter</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                  {% for candidat in all_candidat %}
+                      <tr>
+                        <td style="width:20px"><input type="checkbox" name="liste_select" value="{{candidat.id}}" id=""></td>
+                        <td><a href="{% url 'detaille_candidat' candidat.id %}" target="_blank" class="">{{candidat.prenom}} {{candidat.nom}} <i class="fa fa-eye"></i></a></td>
+                        <td> {{candidat.diplome}} </td>
+                        <td>{{candidat.experience}}</td>
+                        <td>{{candidat.genre}}</td>
+                        <td>{% if candidat.contacter %} <i class="fa fa-check text-success"></i> {% else %} <i class="fa fa-times text-danger"></i> {% endif %}</td>
+                      </tr>
+
+                  {% empty %}
+                    <div class="h3 text-center">Pas de candidat ici</div>
+                  {% endfor %}
+
+
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>select</th>
+                    <th >Prénom / nom</th>
+                    <th>Diplômes</th>
+                    <th>Expérience</th>
+                    <th>Genre</th>
+                    <th>Contacter</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+                   <div class="container row text-center my-4">
+                       <div class="col-md-2"></div>
+
+                       <div class=" col-md-2 form-group">
+                           <input type="submit" name="contacter" class="form-control bg-primary text-white" value="Contacter">
+                       </div>
+
+                       <div class=" col-md-2 form-group">
+                           <input {% if page == 'preselectionner' %} disabled {% endif %} type="submit" name="preselectionner" class="form-control {% if page != 'preselectionner' %} bg-success text-white {% endif %} " value="Preselectionner">
+                       </div>
+
+                       <div class=" col-md-2 form-group">
+                           <input {% if page == 'tous' %} disabled {% endif %} type="submit"   name="entente" class="form-control {% if page != 'tous' %}   bg-secondary text-white {% endif %}" value="En attente">
+                       </div>
+
+                       <div class=" col-md-2 form-group">
+                           <input {% if page == 'rejeter' %} disabled {% endif %} type="submit" name="rejeter" class="form-control {% if page != 'rejeter' %}   bg-danger text-white {% endif %}" value="Rejeter">
+                       </div>
+                   </div> 
+                </form>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.2.0
+    </div>
+    <strong>Copyright &copy; 2023 <a href="https://adminlte.io">CAFE-SARL</a>.</strong>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+
+
+
+
+
+{% endblock %}

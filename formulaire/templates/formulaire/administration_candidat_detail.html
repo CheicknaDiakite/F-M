@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+
+
+    <!-- Right navbar links -->
+
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+<!--    <a href="../../index3.html" class="brand-link">-->
+<!--      <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">-->
+<!--      <span class="brand-text font-weight-light">AdminLTE 3</span>-->
+<!--    </a>-->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+  <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+
+          <li class="nav-header">Menu</li>
+          <li class="nav-item">
+
+            <a href="{% url 'administration' %}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Tous les candidats
+                <span class="badge badge-info right">{{nombre_candidat}}</span>
+              </p>
+            </a>
+
+            <a href="{% url 'administration' 'preselectionner' %}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Présélectionnés
+                <span class="badge badge-info right">{{nombre_preselectionner}}</span>
+              </p>
+            </a>
+
+            <a href="{% url 'administration' 'rejeter' %}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Rejeter
+                <span class="badge badge-info right">{{nombre_rejeter}}</span>
+              </p>
+            </a>
+
+          </li>
+
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+
+    <div class="sidebar-custom">
+      <a href="#" class="btn btn-link"><i class="fas fa-cogs"></i></a>
+      <a href="{% url 'deconnection' %}" class="btn btn-secondary hide-on-collapse pos-right">Déconnexion</a>
+    </div>
+    <!-- /.sidebar-custom -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+
+
+    <!-- Main content -->
+    <section class="content">
+
+
+
+      <div class="container-fluid">
+
+           <h2 class="text-center display-4">Détail du candidats</h2>
+
+        <div class="row">
+          <div class="col-12">
+
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Informations</h3>
+              </div>
+              <!-- /.card-header -->
+
+              <div class="card-body">
+                  <div class="row">
+
+
+                    <div class="col-md-3 form-group">
+                      <label for="nom">Nom</label>
+                      <input type="text" class="form-control" disabled name="" id="nom" value="{{candidat.nom}}">
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                      <label for="prenom">Prénom</label>
+                      <input type="text" class="form-control" disabled name="" id="prenom" value="{{candidat.prenom}}">
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                      <label for="email">Email</label>
+                      <input type="text" class="form-control" disabled name="" id="email" value="{{candidat.email}}">
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                      <label for="numero">Numéro</label>
+                      <input type="text" class="form-control" disabled name="" id="numero" value="{{candidat.numero}}">
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                      <label for="quartier">Quartier</label>
+                      <input type="text" class="form-control" disabled name="" id="quartier" value="{{candidat.quartier}}">
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                      <label for="genre">Genre</label>
+                      <input type="text" class="form-control" disabled name="" id="genre" value="{{candidat.genre}}">
+                    </div>
+
+
+                    <div class="col-md-3 form-group">
+                      <label for="diplome">Diplome</label>
+                      <input type="text" class="form-control" disabled name="" id="diplome" value="{{candidat.diplome}}">
+                    </div>
+
+
+
+
+                    <div class="col-md-3 form-group">
+                      <label for="experience">Expérience</label>
+                      <input type="text" class="form-control" disabled name="" id="experience" value="{{candidat.experience}}">
+                    </div>
+                    
+                    <div class="col-md-3 form-group">
+                      <label for="experience">Diplôme</label>
+                      <a href="http://docs.google.com/gview?url={{candidat.attestion_lien}}&embedded=true" class="form-control" target="_blank">Clickez pour voir <i class="fa fa-eye"></i></a>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                      <label for="experience">CV</label>
+                      <a href="http://docs.google.com/gview?url={{candidat.cv_lien}}&embedded=true" class="form-control" target="_blank">Clickez pour voir <i class="fa fa-eye"></i></a>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                      <label for="experience">Lettre de motivation</label>
+                      <a href="http://docs.google.com/gview?url={{candidat.lettre_motivation_lien}}&embedded=true" class="form-control" target="_blank">Clickez pour voir <i class="fa fa-eye"></i></a>
+                    </div>
+
+
+
+
+
+
+                  </div>
+
+
+                <div class="container">
+
+                  <div >
+                    <div class="text-center h4 mb-2 mt-2">CV</div>
+                      <iframe src="http://docs.google.com/gview?url={{candidat.cv_lien}}&embedded=true" style="width:100%; height:500px;" frameborder="0"></iframe>
+                  </div>
+
+
+                  <div >
+                    <hr>
+                    <div class="text-center h4 mb-2 mt-2">Lettre de motivation</div>
+                      <iframe src="http://docs.google.com/gview?url={{candidat.lettre_motivation_lien}}&embedded=true" style="width:100%; height:500px;" frameborder="0"></iframe>
+                  </div>
+
+
+
+                  <div >
+                    <div class="text-center h4 mb-2 mt-2">Attestation</div>
+                      <iframe src="http://docs.google.com/gview?url={{candidat.attestion_lien}}&embedded=true" style="width:100%; height:500px;" frameborder="0"></iframe>
+                  </div>
+
+
+                </div>
+
+              </div>
+                <form action="" method="post"> {% csrf_token %}
+                   <div class="container row text-center my-4">
+                       <div class="col-md-2"></div>
+
+                       <div class=" col-md-2 form-group">
+                         <input type="submit" name="contacter" class="btn btn-primary" value="Contacter" />
+                       </div>
+
+                       <div class=" col-md-2 form-group">
+                         <input type="submit" name="preselectionner"  class="btn btn-success"  {% if candidat.preselectionner %} disabled {% endif %} value="Préselectionner" />
+                       </div>
+
+                       <div class=" col-md-2 form-group">
+                         <input type="submit" name="atente"  {% if not candidat.rejeter and not candidat.preselectionner %} disabled {% endif %} class="btn btn-secondary" value="Mettre en attente" />
+                       </div>
+
+                       <div class=" col-md-2 form-group">
+                         <input type="submit" name="rejeter"  {% if candidat.rejeter %} disabled {% endif %} class="btn btn-danger" value="Rejeter" />
+                       </div>
+
+                   </div>
+
+                </form>
+
+
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.2.0
+    </div>
+    <strong>Copyright &copy; 2023 <a href="https://adminlte.io">CAFE-SARL</a>.</strong>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+
+
+
+{% endblock %}
