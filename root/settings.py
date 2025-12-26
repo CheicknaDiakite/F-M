@@ -158,11 +158,12 @@ MESSAGE_TAGS = {
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.cafe-recrute-responsable-.ml'
+
+EMAIL_HOST = 'mail.diakitedigital.com'
 EMAIL_USE_TLS = True
-EMAIL_PORT = 465
-EMAIL_HOST_USER = "contact@cafe-recrute-responsable-energie.ml"
-EMAIL_HOST_PASSWORD = "{#j.bcNm.+z4#3vq0y"
+EMAIL_PORT = 26
+EMAIL_HOST_USER = "info@diakitedigital.com"
+EMAIL_HOST_PASSWORD = "Bonjourd@10"
 
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 # EMAIL_HOST = 'mail.example.com'
