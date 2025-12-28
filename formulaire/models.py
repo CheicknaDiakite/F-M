@@ -35,6 +35,9 @@ class SousCategorie(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
+    def __str__(self):
+        return self.libelle
+
     @property
     def all_entrer(self):
         return self.entrer_set.all()
@@ -60,6 +63,9 @@ class OffreDiplome(models.Model):
     libelle = models.CharField(max_length=200)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.libelle
 
 
 # Create your models here.
@@ -97,6 +103,9 @@ class TypeEpreuve(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
+    def __str__(self):
+        return self.libelle
+
 
 class Epreuve(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -109,3 +118,6 @@ class Epreuve(models.Model):
     date_e = models.DateTimeField(auto_now_add=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.statut
