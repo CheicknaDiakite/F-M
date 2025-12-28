@@ -9,7 +9,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 
 from root.mailer import send
-from .models import Formulaire, Categorie, OffreRecrutement, SousCategorie
+from .models import Formulaire, Categorie, OffreRecrutement, SousCategorie, OffreDiplome, Diplome
+from .forms import CategorieForm, SousCategorieForm, OffreRecrutementForm, OffreDiplomeForm
 
 
 # Create your views here.
@@ -236,6 +237,13 @@ def administration(request, page="tous"):
     if not request.user.is_authenticated:
         # messages.success(request, "Vous êtes déjà connecter")
         return redirect(reverse(connexion))
+    # collections for gestion pages
+    categories = Categorie.objects.all()
+    souscategories = SousCategorie.objects.select_related('categorie').all()
+    offres = OffreRecrutement.objects.select_related('categorie').all()
+    diplomes = Diplome.objects.all()
+    offres_diplome = OffreDiplome.objects.select_related('diplome', 'offre').all()
+
     all_candidat = Formulaire.objects.all().filter(preselectionner=False).filter(rejeter=False)
 
     if page:
@@ -250,9 +258,115 @@ def administration(request, page="tous"):
     context["experience"] = "tous"
     context["diplome"] = "tous"
 
+    # handle gestion POST actions first (categorie, souscategorie, offre, offrediplome)
     if request.method == "POST":
         form = request.POST
 
+        # --- Categorie actions ---
+        if page == 'categorie' and 'add_categorie' in form:
+            f = CategorieForm(request.POST)
+            if f.is_valid():
+                f.save()
+                messages.success(request, "Catégorie ajoutée")
+                return redirect(reverse('administration', kwargs={'page': 'categorie'}))
+
+        if page == 'categorie' and 'edit_categorie' in form:
+            cid = form.get('id')
+            obj = Categorie.objects.filter(id=cid).first()
+            if obj:
+                f = CategorieForm(request.POST, instance=obj)
+                if f.is_valid():
+                    f.save()
+                    messages.success(request, "Catégorie modifiée")
+                    return redirect(reverse('administration', kwargs={'page': 'categorie'}))
+
+        if page == 'categorie' and 'delete_categorie' in form:
+            cid = form.get('id')
+            obj = Categorie.objects.filter(id=cid).first()
+            if obj:
+                obj.delete()
+                messages.success(request, "Catégorie supprimée")
+                return redirect(reverse('administration', kwargs={'page': 'categorie'}))
+
+        # --- SousCategorie actions ---
+        if page == 'souscategorie' and 'add_souscategorie' in form:
+            f = SousCategorieForm(request.POST)
+            if f.is_valid():
+                f.save()
+                messages.success(request, "Sous-catégorie ajoutée")
+                return redirect(reverse('administration', kwargs={'page': 'souscategorie'}))
+
+        if page == 'souscategorie' and 'edit_souscategorie' in form:
+            sid = form.get('id')
+            obj = SousCategorie.objects.filter(id=sid).first()
+            if obj:
+                f = SousCategorieForm(request.POST, instance=obj)
+                if f.is_valid():
+                    f.save()
+                    messages.success(request, "Sous-catégorie modifiée")
+                    return redirect(reverse('administration', kwargs={'page': 'souscategorie'}))
+
+        if page == 'souscategorie' and 'delete_souscategorie' in form:
+            sid = form.get('id')
+            obj = SousCategorie.objects.filter(id=sid).first()
+            if obj:
+                obj.delete()
+                messages.success(request, "Sous-catégorie supprimée")
+                return redirect(reverse('administration', kwargs={'page': 'souscategorie'}))
+
+        # --- OffreRecrutement actions ---
+        if page == 'offre' and 'add_offre' in form:
+            f = OffreRecrutementForm(request.POST)
+            if f.is_valid():
+                f.save()
+                messages.success(request, "Offre ajoutée")
+                return redirect(reverse('administration', kwargs={'page': 'offre'}))
+
+        if page == 'offre' and 'edit_offre' in form:
+            oid = form.get('id')
+            obj = OffreRecrutement.objects.filter(id=oid).first()
+            if obj:
+                f = OffreRecrutementForm(request.POST, instance=obj)
+                if f.is_valid():
+                    f.save()
+                    messages.success(request, "Offre modifiée")
+                    return redirect(reverse('administration', kwargs={'page': 'offre'}))
+
+        if page == 'offre' and 'delete_offre' in form:
+            oid = form.get('id')
+            obj = OffreRecrutement.objects.filter(id=oid).first()
+            if obj:
+                obj.delete()
+                messages.success(request, "Offre supprimée")
+                return redirect(reverse('administration', kwargs={'page': 'offre'}))
+
+        # --- OffreDiplome actions ---
+        if page == 'offrediplome' and 'add_offrediplome' in form:
+            f = OffreDiplomeForm(request.POST)
+            if f.is_valid():
+                f.save()
+                messages.success(request, "Offre diplôme ajoutée")
+                return redirect(reverse('administration', kwargs={'page': 'offrediplome'}))
+
+        if page == 'offrediplome' and 'edit_offrediplome' in form:
+            oid = form.get('id')
+            obj = OffreDiplome.objects.filter(id=oid).first()
+            if obj:
+                f = OffreDiplomeForm(request.POST, instance=obj)
+                if f.is_valid():
+                    f.save()
+                    messages.success(request, "Offre diplôme modifiée")
+                    return redirect(reverse('administration', kwargs={'page': 'offrediplome'}))
+
+        if page == 'offrediplome' and 'delete_offrediplome' in form:
+            oid = form.get('id')
+            obj = OffreDiplome.objects.filter(id=oid).first()
+            if obj:
+                obj.delete()
+                messages.success(request, "Offre diplôme supprimée")
+                return redirect(reverse('administration', kwargs={'page': 'offrediplome'}))
+
+        # --- candidats handling (existing) ---
         liste_select = form.getlist("liste_select")
 
         if "filter" in form:
@@ -326,6 +440,19 @@ def administration(request, page="tous"):
     context["nombre_rejeter"] = nombre_rejeter
     context["nombre_candidat_entente"] = nombre_candidat_entente
     context["page"] = page
+
+    # add gestion context (lists and empty forms for modals)
+    context["categories"] = categories
+    context["souscategories"] = souscategories
+    context["offres"] = offres
+    context["diplomes"] = diplomes
+    context["offres_diplome"] = offres_diplome
+
+    context["categorie_form"] = CategorieForm()
+    context["souscategorie_form"] = SousCategorieForm()
+    context["offre_form"] = OffreRecrutementForm()
+    context["offrediplome_form"] = OffreDiplomeForm()
+
     return render(request, "formulaire/administration.html", context=context)
 
 
@@ -439,3 +566,68 @@ def deconnection(request):
     logout(request)
     messages.success(request, "Vous avez été déconnecter")
     return redirect(reverse(connexion))
+
+
+def _ensure_authenticated_redirect(view_func):
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(reverse(connexion))
+        return view_func(request, *args, **kwargs)
+
+    return wrapper
+
+
+@_ensure_authenticated_redirect
+def ajouter_categorie(request):
+    if request.method == 'POST':
+        form = CategorieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Catégorie ajoutée')
+            return redirect(reverse('administration'))
+    else:
+        form = CategorieForm()
+
+    return render(request, 'formulaire/gestion_ajouter.html', {'form': form, 'titre': 'Ajouter Catégorie'})
+
+
+@_ensure_authenticated_redirect
+def ajouter_souscategorie(request):
+    if request.method == 'POST':
+        form = SousCategorieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Sous-catégorie ajoutée')
+            return redirect(reverse('administration'))
+    else:
+        form = SousCategorieForm()
+
+    return render(request, 'formulaire/gestion_ajouter.html', {'form': form, 'titre': 'Ajouter Sous-catégorie'})
+
+
+@_ensure_authenticated_redirect
+def ajouter_offre_recrutement(request):
+    if request.method == 'POST':
+        form = OffreRecrutementForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Offre de recrutement ajoutée')
+            return redirect(reverse('administration'))
+    else:
+        form = OffreRecrutementForm()
+
+    return render(request, 'formulaire/gestion_ajouter.html', {'form': form, 'titre': 'Ajouter Offre Recrutement'})
+
+
+@_ensure_authenticated_redirect
+def ajouter_offre_diplome(request):
+    if request.method == 'POST':
+        form = OffreDiplomeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Offre diplôme ajoutée")
+            return redirect(reverse('administration'))
+    else:
+        form = OffreDiplomeForm()
+
+    return render(request, 'formulaire/gestion_ajouter.html', {'form': form, 'titre': 'Ajouter Offre Diplôme'})

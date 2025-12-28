@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2>{{ titre }}</h2>
+  <form method="post"> {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Enregistrer</button>
+      <a href="{% url 'administration' %}" class="btn btn-secondary">Annuler</a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

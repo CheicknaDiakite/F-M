@@ -1,0 +1,96 @@
+<!-- Modals for gestion -->
+<!-- Categorie -->
+<div class="modal fade" id="addCategorieModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="post" action=""> {% csrf_token %}
+        <div class="modal-header"><h5 class="modal-title">Ajouter Catégorie</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+        <div class="modal-body">{{ categorie_form.as_p }}</div>
+        <div class="modal-footer"><button type="submit" name="add_categorie" class="btn btn-success">Enregistrer</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editCategorieModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="post" action=""> {% csrf_token %}
+        <div class="modal-header"><h5 class="modal-title">Modifier Catégorie</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+        <div class="modal-body">{{ categorie_form.as_p }}<input type="hidden" name="id"></div>
+        <div class="modal-footer"><button type="submit" name="edit_categorie" class="btn btn-primary">Modifier</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteCategorieModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="post" action=""> {% csrf_token %}
+        <div class="modal-header"><h5 class="modal-title">Confirmer suppression</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+        <div class="modal-body">Voulez-vous supprimer cette catégorie ?<input type="hidden" name="id"></div>
+        <div class="modal-footer"><button type="submit" name="delete_categorie" class="btn btn-danger">Supprimer</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Sous-categorie -->
+<div class="modal fade" id="addSousCategorieModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><form method="post" action=""> {% csrf_token %}<div class="modal-header"><h5 class="modal-title">Ajouter Sous-catégorie</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">{{ souscategorie_form.as_p }}</div><div class="modal-footer"><button type="submit" name="add_souscategorie" class="btn btn-success">Enregistrer</button></div></form></div></div></div>
+
+<div class="modal fade" id="editSousCategorieModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><form method="post" action=""> {% csrf_token %}<div class="modal-header"><h5 class="modal-title">Modifier Sous-catégorie</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">{{ souscategorie_form.as_p }}<input type="hidden" name="id"></div><div class="modal-footer"><button type="submit" name="edit_souscategorie" class="btn btn-primary">Modifier</button></div></form></div></div></div>
+
+<div class="modal fade" id="deleteSousCategorieModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><form method="post" action=""> {% csrf_token %}<div class="modal-header"><h5 class="modal-title">Confirmer suppression</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">Voulez-vous supprimer cette sous-catégorie ?<input type="hidden" name="id"></div><div class="modal-footer"><button type="submit" name="delete_souscategorie" class="btn btn-danger">Supprimer</button></div></form></div></div></div>
+
+<!-- Offre -->
+<div class="modal fade" id="addOffreModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><form method="post" action=""> {% csrf_token %}<div class="modal-header"><h5 class="modal-title">Ajouter Offre</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">{{ offre_form.as_p }}</div><div class="modal-footer"><button type="submit" name="add_offre" class="btn btn-success">Enregistrer</button></div></form></div></div></div>
+
+<div class="modal fade" id="editOffreModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><form method="post" action=""> {% csrf_token %}<div class="modal-header"><h5 class="modal-title">Modifier Offre</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">{{ offre_form.as_p }}<input type="hidden" name="id"></div><div class="modal-footer"><button type="submit" name="edit_offre" class="btn btn-primary">Modifier</button></div></form></div></div></div>
+
+<div class="modal fade" id="deleteOffreModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><form method="post" action=""> {% csrf_token %}<div class="modal-header"><h5 class="modal-title">Confirmer suppression</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">Voulez-vous supprimer cette offre ?<input type="hidden" name="id"></div><div class="modal-footer"><button type="submit" name="delete_offre" class="btn btn-danger">Supprimer</button></div></form></div></div></div>
+
+<!-- Offre Diplome -->
+<div class="modal fade" id="addOffreDiplomeModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><form method="post" action=""> {% csrf_token %}<div class="modal-header"><h5 class="modal-title">Ajouter Offre Diplôme</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">{{ offrediplome_form.as_p }}</div><div class="modal-footer"><button type="submit" name="add_offrediplome" class="btn btn-success">Enregistrer</button></div></form></div></div></div>
+
+<div class="modal fade" id="editOffreDiplomeModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><form method="post" action=""> {% csrf_token %}<div class="modal-header"><h5 class="modal-title">Modifier Offre Diplôme</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">{{ offrediplome_form.as_p }}<input type="hidden" name="id"></div><div class="modal-footer"><button type="submit" name="edit_offrediplome" class="btn btn-primary">Modifier</button></div></form></div></div></div>
+
+<div class="modal fade" id="deleteOffreDiplomeModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><form method="post" action=""> {% csrf_token %}<div class="modal-header"><h5 class="modal-title">Confirmer suppression</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">Voulez-vous supprimer cette offre diplôme ?<input type="hidden" name="id"></div><div class="modal-footer"><button type="submit" name="delete_offrediplome" class="btn btn-danger">Supprimer</button></div></form></div></div></div>
+
+<!-- small JS to populate modals -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  // categorie
+  document.querySelectorAll('.btn-edit-categorie').forEach(function(b){b.addEventListener('click', function(){
+    var id = this.dataset.id; var lib = this.dataset.libelle;
+    var modal = document.getElementById('editCategorieModal');
+    if(modal){ modal.querySelector('input[name="libelle"]').value = lib; modal.querySelector('input[name="id"]').value = id; }
+  })});
+  document.querySelectorAll('.btn-delete-categorie').forEach(function(b){b.addEventListener('click', function(){var m=document.getElementById('deleteCategorieModal'); if(m) m.querySelector('input[name="id"]').value = this.dataset.id;})});
+
+  // souscategorie
+  document.querySelectorAll('.btn-edit-souscategorie').forEach(function(b){b.addEventListener('click', function(){
+    var id = this.dataset.id; var cat = this.dataset.categorie; var lib = this.dataset.libelle;
+    var modal = document.getElementById('editSousCategorieModal');
+    if(modal){ modal.querySelector('input[name="libelle"]').value = lib; modal.querySelector('select[name="categorie"]').value = cat; modal.querySelector('input[name="id"]').value = id; }
+  })});
+  document.querySelectorAll('.btn-delete-souscategorie').forEach(function(b){b.addEventListener('click', function(){var m=document.getElementById('deleteSousCategorieModal'); if(m) m.querySelector('input[name="id"]').value = this.dataset.id;})});
+
+  // offre
+  document.querySelectorAll('.btn-edit-offre').forEach(function(b){b.addEventListener('click', function(){
+    var id = this.dataset.id; var cat = this.dataset.categorie; var lib = this.dataset.libelle;
+    var modal = document.getElementById('editOffreModal');
+    if(modal){ modal.querySelector('input[name="libelle"]').value = lib; modal.querySelector('select[name="categorie"]').value = cat; modal.querySelector('input[name="id"]').value = id; }
+  })});
+  document.querySelectorAll('.btn-delete-offre').forEach(function(b){b.addEventListener('click', function(){var m=document.getElementById('deleteOffreModal'); if(m) m.querySelector('input[name="id"]').value = this.dataset.id;})});
+
+  // offre diplome
+  document.querySelectorAll('.btn-edit-offrediplome').forEach(function(b){b.addEventListener('click', function(){
+    var id = this.dataset.id; var dipl = this.dataset.diplome; var off = this.dataset.offre; var lib = this.dataset.libelle;
+    var modal = document.getElementById('editOffreDiplomeModal');
+    if(modal){ modal.querySelector('input[name="libelle"]').value = lib; modal.querySelector('select[name="diplome"]').value = dipl; modal.querySelector('select[name="offre"]').value = off; modal.querySelector('input[name="id"]').value = id; }
+  })});
+  document.querySelectorAll('.btn-delete-offrediplome').forEach(function(b){b.addEventListener('click', function(){var m=document.getElementById('deleteOffreDiplomeModal'); if(m) m.querySelector('input[name="id"]').value = this.dataset.id;})});
+
+});
+</script>

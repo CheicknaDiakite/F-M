@@ -18,15 +18,10 @@
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-<!--    <a href="../../index3.html" class="brand-link">-->
-<!--      <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">-->
-<!--      <span class="brand-text font-weight-light">AdminLTE 3</span>-->
-<!--    </a>-->
-
+   
     <!-- Sidebar -->
     <div class="sidebar">
-  <nav class="mt-2">
+      <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -61,6 +56,26 @@
 
           </li>
 
+          <li class="nav-header">Gestion</li>
+          <li class="nav-item">
+            <a href="{% url 'administration' 'categorie' %}" class="nav-link {% if page == 'categorie' %}active{% endif %}">
+              <i class="nav-icon fa fa-folder-open"></i>
+              <p>Catégories</p>
+            </a>
+            <a href="{% url 'administration' 'souscategorie' %}" class="nav-link {% if page == 'souscategorie' %}active{% endif %}">
+              <i class="nav-icon fa fa-sitemap"></i>
+              <p>Sous-catégories</p>
+            </a>
+            <a href="{% url 'administration' 'offre' %}" class="nav-link {% if page == 'offre' %}active{% endif %}">
+              <i class="nav-icon fa fa-briefcase"></i>
+              <p>Offres</p>
+            </a>
+            <a href="{% url 'administration' 'offrediplome' %}" class="nav-link {% if page == 'offrediplome' %}active{% endif %}">
+              <i class="nav-icon fa fa-graduation-cap"></i>
+              <p>Offres Diplômes</p>
+            </a>
+          </li>
+
 
         </ul>
       </nav>
@@ -84,10 +99,9 @@
     <!-- Main content -->
     <section class="content">
 
-
-
       <div class="container-fluid">
 
+          {% if page != 'categorie' and page != 'souscategorie' and page != 'offre' and page != 'offrediplome' %}
            <h2 class="text-center display-4">Liste des candidats ({{nombre_candidat}})</h2>
             <form action="" method="post"> {% csrf_token %}
                 <div class="row">
@@ -137,8 +151,8 @@
         <div class="row">
           <div class="col-12">
 
-
             <div class="card">
+
               <div class="card-header">
                 <h3 class="card-title">Liste des candidat</h3>
               </div>
@@ -186,6 +200,7 @@
                   </tfoot>
                 </table>
               </div>
+
                    <div class="container row text-center my-4">
                        <div class="col-md-2"></div>
 
@@ -213,6 +228,159 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
+          {% endif %}
+
+          {% if page == 'categorie' %}
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Gestion des Catégories</h3>
+              </div>
+              <div class="card-body">
+                <div class="p-3">
+                  <button class="btn btn-success" data-toggle="modal" data-target="#addCategorieModal">Ajouter Catégorie</button>
+                  <table class="table mt-3">
+                    <thead><tr><th>ID</th><th>Libelle</th><th>Actions</th></tr></thead>
+                    <tbody>
+                      {% for cat in categories %}
+                        <tr>
+                          <td>{{ cat.id }}</td>
+                          <td>{{ cat.libelle }}</td>
+                          <td>
+                            <button class="btn btn-sm btn-primary btn-edit-categorie" data-id="{{ cat.id }}" data-libelle="{{ cat.libelle }}" data-toggle="modal" data-target="#editCategorieModal">Modifier</button>
+                            <button class="btn btn-sm btn-danger btn-delete-categorie" data-id="{{ cat.id }}" data-toggle="modal" data-target="#deleteCategorieModal">Supprimer</button>
+                          </td>
+                        </tr>
+                      {% empty %}
+                        <tr><td colspan="3">Aucune catégorie</td></tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+          {% endif %}
+
+          {% if page == 'souscategorie' %}
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Gestion des Sous-catégories</h3>
+              </div>
+              <div class="card-body">
+                <div class="p-3">
+                  <button class="btn btn-success" data-toggle="modal" data-target="#addSousCategorieModal">Ajouter Sous-catégorie</button>
+                  <table class="table mt-3">
+                    <thead><tr><th>ID</th><th>Catégorie</th><th>Libelle</th><th>Actions</th></tr></thead>
+                    <tbody>
+                      {% for sous in souscategories %}
+                        <tr>
+                          <td>{{ sous.id }}</td>
+                          <td>{{ sous.categorie.libelle }}</td>
+                          <td>{{ sous.libelle }}</td>
+                          <td>
+                            <button class="btn btn-sm btn-primary btn-edit-souscategorie" data-id="{{ sous.id }}" data-categorie="{{ sous.categorie.id }}" data-libelle="{{ sous.libelle }}" data-toggle="modal" data-target="#editSousCategorieModal">Modifier</button>
+                            <button class="btn btn-sm btn-danger btn-delete-souscategorie" data-id="{{ sous.id }}" data-toggle="modal" data-target="#deleteSousCategorieModal">Supprimer</button>
+                          </td>
+                        </tr>
+                      {% empty %}
+                        <tr><td colspan="4">Aucune sous-catégorie</td></tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+          {% endif %}
+
+          {% if page == 'offre' %}
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Gestion des Offres</h3>
+              </div>
+              <div class="card-body">
+                <div class="p-3">
+                  <button class="btn btn-success" data-toggle="modal" data-target="#addOffreModal">Ajouter Offre</button>
+                  <table class="table mt-3">
+                    <thead><tr><th>ID</th><th>Sous-catégorie</th><th>Libelle</th><th>Actions</th></tr></thead>
+                    <tbody>
+                      {% for off in offres %}
+                        <tr>
+                          <td>{{ off.id }}</td>
+                          <td>{{ off.categorie.libelle }}</td>
+                          <td>{{ off.libelle }}</td>
+                          <td>
+                            <button class="btn btn-sm btn-primary btn-edit-offre" data-id="{{ off.id }}" data-categorie="{{ off.categorie.id }}" data-libelle="{{ off.libelle }}" data-toggle="modal" data-target="#editOffreModal">Modifier</button>
+                            <button class="btn btn-sm btn-danger btn-delete-offre" data-id="{{ off.id }}" data-toggle="modal" data-target="#deleteOffreModal">Supprimer</button>
+                          </td>
+                        </tr>
+                      {% empty %}
+                        <tr><td colspan="4">Aucune offre</td></tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+          {% endif %}
+
+          {% if page == 'offrediplome' %}
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Gestion des Offres Diplômes</h3>
+              </div>
+              <div class="card-body">
+                <div class="p-3">
+                  <button class="btn btn-success" data-toggle="modal" data-target="#addOffreDiplomeModal">Ajouter Offre Diplôme</button>
+                  <table class="table mt-3">
+                    <thead><tr><th>ID</th><th>Diplome</th><th>Offre</th><th>Libelle</th><th>Actions</th></tr></thead>
+                    <tbody>
+                      {% for od in offres_diplome %}
+                        <tr>
+                          <td>{{ od.id }}</td>
+                          <td>{{ od.diplome.libelle }}</td>
+                          <td>{{ od.offre.libelle }}</td>
+                          <td>{{ od.libelle }}</td>
+                          <td>
+                            <button class="btn btn-sm btn-primary btn-edit-offrediplome" data-id="{{ od.id }}" data-diplome="{{ od.diplome.id }}" data-offre="{{ od.offre.id }}" data-libelle="{{ od.libelle }}" data-toggle="modal" data-target="#editOffreDiplomeModal">Modifier</button>
+                            <button class="btn btn-sm btn-danger btn-delete-offrediplome" data-id="{{ od.id }}" data-toggle="modal" data-target="#deleteOffreDiplomeModal">Supprimer</button>
+                          </td>
+                        </tr>
+                      {% empty %}
+                        <tr><td colspan="5">Aucune offre diplôme</td></tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+          {% endif %}
       </div>
       <!-- /.container-fluid -->
     </section>
@@ -235,5 +403,7 @@
 
 
 
+
+{% include 'formulaire/administration_gestion_modals.html' %}
 
 {% endblock %}
